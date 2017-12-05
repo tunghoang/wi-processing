@@ -1,0 +1,6 @@
+[key]
+SECRET_KEY=supersecret
+[user]
+NAME=test
+PASSWORD=test
+ID=123
