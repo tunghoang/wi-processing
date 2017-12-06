@@ -1,0 +1,4 @@
+scipy==0.19.0
+Flask_JWT==0.3.2
+requests==2.18.4
+Flask==0.12.2
