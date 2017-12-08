@@ -5,8 +5,8 @@ import requests
 # test convolutional
 def test_convolution(headers):
   dict_to_send = {
-      'input' : [1.1,2.2, 3.3, 4.4],
-      'kernel': [0.1, 1.2, 2.3, 3.4]
+      'input' : [2, 1, 2, 1 ,5],
+      'kernel': [1, 2, 3, 4]
   }
   res = requests.post('http://localhost:5000/convolution', json=dict_to_send, headers=headers)
   print res.text

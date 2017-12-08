@@ -5,11 +5,13 @@ import numpy as np
 
 # convolutional
 def conv(inputC, kernel):
-  return np.real(np.fft.ifft( np.fft.fft(inputC)*np.fft.fft(kernel) )).tolist()
+  max_len = max(len(inputC), len(kernel))
+  return np.real(np.fft.ifft( np.fft.fft(inputC, max_len)*np.fft.fft(kernel, max_len))).tolist()
 
 # deconvolutional
 def deconv(inputC, kernel):
-  return np.real(np.fft.ifft( np.fft.fft(inputC)/np.fft.fft(kernel) )).tolist()
+  max_len = max(len(inputC), len(kernel))
+  return np.real(np.fft.ifft( np.fft.fft(inputC, max_len)/np.fft.fft(kernel, max_len))).tolist()
 
 # median
 def median(inputC, kernel_size=None):
