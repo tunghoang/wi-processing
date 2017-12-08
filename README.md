@@ -9,6 +9,8 @@ Documentation: https://docs.google.com/spreadsheets/d/16A8tmHxTxgT83Ig8RFASakzpk
 ## Installation
 Using the command: pip install -r requirements.txt
 
+Download [alglib](http://www.alglib.net/translator/re/alglib-3.12.0.cpython.free.zip) and follow the manual to install alglib
+
 ## Running the service
 python main.py
 

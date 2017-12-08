@@ -38,16 +38,17 @@ def index():
     return "this is index"
 
 @app.route('/convolution', methods=["POST"])
-@jwt_required()
+# @jwt_required()
 def convolution():
   if flask.request.method == "POST":
     # get input from the json file
     conv_json = flask.request.get_json()
-    curve = conv_json['curve']
-    ref_curve = conv_json['refCurve']
+    inputCurve = conv_json['input']
+    kernel = conv_json['kernel']
+    size = conv_json['size']
 
-    result_curve = math_function.conv(curve, ref_curve)
-    content = {'curve': result_curve.tolist()}
+    result_curve = math_function.conv(inputCurve, kernel, size)
+    content = {'curve': result_curve}
 
     # return output as a json file 
     result_json = json_respond(200, "success", content)
@@ -55,16 +56,17 @@ def convolution():
     return flask.jsonify(result_json)
 
 @app.route('/deconvolution', methods=["POST"])
-@jwt_required()
+# @jwt_required()
 def deconvolution():
   if flask.request.method == "POST":
     # get input from the json file
     deconv_json = flask.request.get_json()
-    signal = deconv_json['signal']
-    divisor = deconv_json['divisor']
+    inputCurve = deconv_json['input']
+    kernel = deconv_json['kernel']
+    size = deconv_json['size']
 
-    quotient, remainder = math_function.deconv(signal, divisor)
-    content = {'quotient': quotient.tolist(), 'remainder': remainder.tolist()}
+    result_curve = math_function.deconv(inputCurve, kernel, size)
+    content = {'curve': result_curve}
 
     # return output as a json file 
     result_json = json_respond(200, "success", content)
