@@ -38,16 +38,31 @@ def index():
     return "this is index"
 
 @app.route('/convolution', methods=["POST"])
-# @jwt_required()
+#@jwt_required()
 def convolution():
   if flask.request.method == "POST":
     # get input from the json file
     conv_json = flask.request.get_json()
     inputCurve = conv_json['input']
     kernel = conv_json['kernel']
-    size = conv_json['size']
 
-    result_curve = math_function.conv(inputCurve, kernel, size)
+    result_curve = math_function.conv(inputCurve, kernel)
+
+    content = {'curve': result_curve}
+    # return output as a json file 
+    result_json = json_respond(200, "success", content)
+    return flask.jsonify(result_json)
+
+@app.route('/deconvolution', methods=["POST"])
+#@jwt_required()
+def deconvolution():
+  if flask.request.method == "POST":
+    # get input from the json file
+    deconv_json = flask.request.get_json()
+    inputCurve = deconv_json['input']
+    kernel = deconv_json['kernel']
+
+    result_curve = math_function.deconv(inputCurve, kernel)
     content = {'curve': result_curve}
 
     # return output as a json file 
@@ -55,17 +70,33 @@ def convolution():
 
     return flask.jsonify(result_json)
 
-@app.route('/deconvolution', methods=["POST"])
-# @jwt_required()
-def deconvolution():
+@app.route('/median', methods=["POST"])
+#@jwt_required()
+def median():
   if flask.request.method == "POST":
     # get input from the json file
-    deconv_json = flask.request.get_json()
-    inputCurve = deconv_json['input']
-    kernel = deconv_json['kernel']
-    size = deconv_json['size']
+    median_json = flask.request.get_json()
+    inputCurve = median_json['input']
 
-    result_curve = math_function.deconv(inputCurve, kernel, size)
+    result_curve = math_function.median(inputCurve)
+    content = {'curve': result_curve}
+
+    # return output as a json file 
+    result_json = json_respond(200, "success", content)
+
+    return flask.jsonify(result_json)
+
+@app.route('/savgol', methods=["POST"])
+#@jwt_required()
+def savgol():
+  if flask.request.method == "POST":
+    # get input from the json file
+    savgol_json = flask.request.get_json()
+    inputCurve = savgol_json['input']
+    window_length = savgol_json['window_length']
+    polyorder = savgol_json['polyorder']
+
+    result_curve = math_function.savgol(inputCurve, window_length, polyorder)
     content = {'curve': result_curve}
 
     # return output as a json file 

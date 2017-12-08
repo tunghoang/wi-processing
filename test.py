@@ -5,19 +5,35 @@ import requests
 # test convolutional
 def test_convolution(headers):
   dict_to_send = {
-      'curve' : [1.1,2.2, 3.3, 4.4],
-      'refCurve': [0.1, 1.2, 2.3, 3.4]
-    }
+      'input' : [1.1,2.2, 3.3, 4.4],
+      'kernel': [0.1, 1.2, 2.3, 3.4]
+  }
   res = requests.post('http://localhost:5000/convolution', json=dict_to_send, headers=headers)
   print res.text
 
 # test deconvolutional
 def test_deconvolution(headers):
   dict_to_send = {
-      'signal' : [2, 1],
-      'divisor': [0, 1, 0, 0, 1, 1, 0, 0]
-    }
+      'input' : [20.46, 22.88, 20.46, 13.2],
+      'kernel': [0.1, 1.2, 2.3, 3.4]
+  }
   res = requests.post('http://localhost:5000/deconvolution', json=dict_to_send, headers=headers)
+  print res.text
+
+def test_median(headers):
+  dict_to_send = {
+      'input' : [1.1,2.2, 3.3, 4.4]
+  }
+  res = requests.post('http://localhost:5000/median', json=dict_to_send, headers=headers)
+  print res.text
+
+def test_savgol(headers):
+  dict_to_send = {
+      'input' : [2, 2, 5, 2, 1, 0, 1, 4, 9],
+      'window_length': 5,
+      'polyorder': 2
+  }
+  res = requests.post('http://localhost:5000/savgol', json=dict_to_send, headers=headers)
   print res.text
 
 if __name__ == '__main__':
@@ -31,5 +47,7 @@ if __name__ == '__main__':
     # request with token
     test_convolution(headers)
     test_deconvolution(headers)
+    test_median(headers)
+    test_savgol(headers)
   except:
     print("Failed")
