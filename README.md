@@ -48,9 +48,19 @@ curl -H "Content-Type: application/json" -X POST -d '{"username":"your_username"
 4. Now, you can request the service to use functions:
 - Convolutional:
 ```
-curl -H "Authorization": "JWT your_token" -X POST -d '{'refCurve': [0.1, 1.2, 2.3, 3.4], 'curve': [1.1, 2.2, 3.3, 4.4]}' http://your_domain/convolution
+curl -H "Authorization": "JWT your_token" -X POST -d '{'input': [0.1, 1.2, 2.3, 3.4], 'kernel': [1.1, 2.2, 3.3, 4.4]}' http://your_domain/convolution
 ```
 - Deconvolutional:
 ```
-curl -H "Authorization": "JWT your_token" -X POST -d '{'signal': [2, 1], 'divisor': [0, 1, 0, 0, 1, 1, 0, 0]}' http://your_domain/deconvolution
+curl -H "Authorization": "JWT your_token" -X POST -d '{'input': [2, 1], 'kernel': [0, 1, 0, 0, 1, 1, 0, 0]}' http://your_domain/deconvolution
+```
+
+- Median
+```
+curl -H "Authorization": "JWT your_token" -X POST -d '{'input': [1.1,2.2, 3.3, 4.4]}' http://your_domain/median
+```
+
+- Savitzky-Golay
+```
+curl -H "Authorization": "JWT your_token" -X POST -d '{'input': [2, 2, 5, 2, 1, 0, 1, 4, 9], 'window_length': 5, 'polyorder': 2}' http://your_domain/savgol
 ```
