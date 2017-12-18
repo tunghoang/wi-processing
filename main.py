@@ -1,14 +1,23 @@
 import flask
 from flask_jwt import JWT, jwt_required
+from flask_cors import CORS
 import ConfigParser
 import math_function
 from json_respond import json_respond
+import ctypes
+
+lib = ctypes.cdll.LoadLibrary('./alglib.so')
+lib.conv.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
+lib.conv.restype = ctypes.c_char_p
+lib.deconv.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
+lib.deconv.restype = ctypes.c_char_p
 
 # load config from config file
 configParser = ConfigParser.RawConfigParser()  
 configParser.read("config")
 
 app = flask.Flask("wi-processing");
+CORS(app)
 # set secret key to generate token
 app.config['SECRET_KEY'] = configParser.get('key', 'SECRET_KEY')
 
@@ -37,16 +46,27 @@ jwt = JWT(app, verify, identity)
 def index():
     return "this is index"
 
+#print lib.conv("[2, 1, 2, 1, 5]", 5, "[1, 2, 3, 4]", 4)
+
+
+#print lib.conv("[23,24,30,16,17]", 5, "[1,2,3,4]", 4)
+
 @app.route('/convolution', methods=["POST"])
 #@jwt_required()
 def convolution():
   if flask.request.method == "POST":
     # get input from the json file
     conv_json = flask.request.get_json()
+    
     inputCurve = conv_json['input']
+    m = len(inputCurve)
+    input_str = "["+",".join(map(str,inputCurve))+"]"
+    
     kernel = conv_json['kernel']
-
-    result_curve = math_function.conv(inputCurve, kernel)
+    n = len(kernel)
+    kernel_str = "["+",".join(map(str,kernel))+"]"
+    
+    result_curve = lib.conv(input_str, m, kernel_str, n)
 
     content = {'curve': result_curve}
     # return output as a json file 
@@ -60,9 +80,15 @@ def deconvolution():
     # get input from the json file
     deconv_json = flask.request.get_json()
     inputCurve = deconv_json['input']
-    kernel = deconv_json['kernel']
+    m = len(inputCurve)
+    input_str = "["+",".join(map(str,inputCurve))+"]"
 
-    result_curve = math_function.deconv(inputCurve, kernel)
+    kernel = deconv_json['kernel']
+    n = len(kernel)
+    kernel_str = "["+",".join(map(str,kernel))+"]"
+    
+    result_curve = lib.deconv(input_str, m, kernel_str, n)
+
     content = {'curve': result_curve}
 
     # return output as a json file 

@@ -14,8 +14,8 @@ def test_convolution(headers):
 # test deconvolutional
 def test_deconvolution(headers):
   dict_to_send = {
-      'input' : [20.46, 22.88, 20.46, 13.2],
-      'kernel': [0.1, 1.2, 2.3, 3.4]
+      'input' : [23.0000,24.0000,30.0000,16.0000,17.0000],
+      'kernel': [1, 2, 3, 4]
   }
   res = requests.post('http://localhost:5000/deconvolution', json=dict_to_send, headers=headers)
   print res.text
