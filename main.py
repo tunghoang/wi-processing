@@ -70,7 +70,8 @@ def convolution():
     kernel_str = "["+",".join(map(str,kernel))+"]"
     
     result_curve = lib.conv(input_str, m, kernel_str, n)
-
+    result_curve = map(float,result_curve.strip("[]").split(","))
+    result_curve = [round(r, 4) for r in result_curve]
     content = {'curve': result_curve}
     # return output as a json file
     result_json = json_respond(200, "success", content)
@@ -92,6 +93,8 @@ def deconvolution():
     kernel_str = "["+",".join(map(str,kernel))+"]"
     
     result_curve = lib.deconv(input_str, m, kernel_str, n)
+    result_curve = map(float,result_curve.strip("[]").split(","))
+    result_curve = [round(r, 4) for r in result_curve]
 
     content = {'curve': result_curve}
 
