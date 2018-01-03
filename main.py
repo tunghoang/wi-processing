@@ -111,8 +111,9 @@ def median():
         # get input from the json file
         median_json = flask.request.get_json()
         inputCurve = median_json['input']
+        length = median_json['length']
 
-        result_curve = math_function.median(inputCurve)
+        result_curve = math_function.median(inputCurve, length)
         content = {'curve': result_curve}
 
         # return output as a json file
@@ -128,11 +129,12 @@ def savgol():
         # get input from the json file
         savgol_json = flask.request.get_json()
         inputCurve = savgol_json['input']
-        window_length = savgol_json['window_length']
-        polyorder = savgol_json['polyorder']
+        window_length = savgol_json['length']
+        polyorder = savgol_json['poly']
+        deriv = savgol_json['deriv']
 
         result_curve = math_function.savgol(
-            inputCurve, window_length, polyorder)
+            inputCurve, window_length, polyorder, deriv)
         content = {'curve': result_curve}
 
         # return output as a json file

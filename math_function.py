@@ -24,8 +24,8 @@ def median(inputC, kernel_size=None):
   return result
 
 #Savitzky-Golay filter
-def savgol(inputC, window_length, polyorder):
-  result = signal.savgol_filter(inputC, window_length, polyorder).tolist()
+def savgol(inputC, window_length, polyorder, deriv):
+  result = signal.savgol_filter(inputC, window_length, polyorder, deriv).tolist()
   result = [round(result[i], 4) for i in range(len(result))]
   return result
 

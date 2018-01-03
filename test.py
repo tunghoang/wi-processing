@@ -22,7 +22,8 @@ def test_deconvolution(headers):
 
 def test_median(headers):
   dict_to_send = {
-      'input' : [1.1,2.2, 3.3, 4.4]
+      'input' : [1.1,2.2, 3.3, 4.4],
+      'length' : 3
   }
   res = requests.post('http://localhost:5000/median', json=dict_to_send, headers=headers)
   print res.text
@@ -30,8 +31,9 @@ def test_median(headers):
 def test_savgol(headers):
   dict_to_send = {
       'input' : [2, 2, 5, 2, 1, 0, 1, 4, 9],
-      'window_length': 5,
-      'polyorder': 2
+      'length': 5,
+      'poly': 2,
+      'deriv': 1
   }
   res = requests.post('http://localhost:5000/savgol', json=dict_to_send, headers=headers)
   print res.text
