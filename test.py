@@ -1,6 +1,7 @@
 # provide test function for web service
 
 import requests
+import numpy as np
 
 # test convolutional
 def test_convolution(headers):
@@ -38,6 +39,17 @@ def test_savgol(headers):
   res = requests.post('http://localhost:5000/savgol', json=dict_to_send, headers=headers)
   print res.text
 
+def test_fft(headers):
+  N = 100
+  x = np.linspace(0,2*np.pi,N)
+  y = np.sin(x) + np.random.random(N) * 0.2
+  dict_to_send = {
+      'input': y.tolist(),
+      'length': 4
+  }
+  res = requests.post('http://localhost:5000/fft', json=dict_to_send, headers=headers)
+  print res.text
+
 if __name__ == '__main__':
   try:
     # get token
@@ -51,5 +63,6 @@ if __name__ == '__main__':
     test_deconvolution(headers)
     test_median(headers)
     test_savgol(headers)
+    test_fft(headers)
   except:
     print("Failed")

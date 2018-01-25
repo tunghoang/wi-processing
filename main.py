@@ -142,5 +142,21 @@ def savgol():
 
         return flask.jsonify(result_json)
 
+@app.route('/fft', methods=["POST"])
+#@jwt_required()
+def fft():
+    if flask.request.method == "POST":
+        # get input from the json file
+        fft_json = flask.request.get_json()
+        inputCurve = fft_json['input']
+        length = fft_json['length']
+
+        y_new = math_function.fft(inputCurve, length)
+        content = {'curve': y_new}
+
+        # return output as a json file
+        result_json = json_respond(200, "success", content)
+
+        return flask.jsonify(result_json)
 
 app.run(debug=True)
