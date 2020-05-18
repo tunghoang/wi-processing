@@ -159,4 +159,4 @@ def fft():
 
         return flask.jsonify(result_json)
 
-app.run(debug=True)
+app.run(port=6000)

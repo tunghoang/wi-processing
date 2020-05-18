@@ -7,13 +7,17 @@ Documentation: https://docs.google.com/spreadsheets/d/16A8tmHxTxgT83Ig8RFASakzpk
 - python 2.7
 
 ## Installation
-Using the command: pip install -r requirements.txt
-
+Using the command: 
+```bash
+$ virtualenv env
+$ env/bin/pip install -r requirements.txt
+```
 Download [alglib](http://www.alglib.net/translator/re/alglib-3.12.0.cpython.free.zip) and follow the manual to install alglib
 
 ## Running the service
-python main.py
-
+```bash
+$ env/bin/python main.py
+```
 ## Functions provided by the service
 - Convolutional
 - Deconvolutional
