@@ -9,8 +9,8 @@ def test_convolution(headers):
       'input' : [2, 1, 2, 1 ,5],
       'kernel': [1, 2, 3, 4]
   }
-  res = requests.post('http://localhost:5000/convolution', json=dict_to_send, headers=headers)
-  print res.text
+  res = requests.post('http://localhost:6000/convolution', json=dict_to_send, headers=headers)
+  print(res.text)
 
 # test deconvolutional
 def test_deconvolution(headers):
@@ -18,16 +18,16 @@ def test_deconvolution(headers):
       'input' : [23.0000,24.0000,30.0000,16.0000,17.0000],
       'kernel': [1, 2, 3, 4]
   }
-  res = requests.post('http://localhost:5000/deconvolution', json=dict_to_send, headers=headers)
-  print res.text
+  res = requests.post('http://localhost:6000/deconvolution', json=dict_to_send, headers=headers)
+  print(res.text)
 
 def test_median(headers):
   dict_to_send = {
       'input' : [1.1,2.2, 3.3, 4.4],
       'length' : 3
   }
-  res = requests.post('http://localhost:5000/median', json=dict_to_send, headers=headers)
-  print res.text
+  res = requests.post('http://localhost:6000/median', json=dict_to_send, headers=headers)
+  print(res.text)
 
 def test_savgol(headers):
   dict_to_send = {
@@ -36,8 +36,8 @@ def test_savgol(headers):
       'poly': 2,
       'deriv': 1
   }
-  res = requests.post('http://localhost:5000/savgol', json=dict_to_send, headers=headers)
-  print res.text
+  res = requests.post('http://localhost:6000/savgol', json=dict_to_send, headers=headers)
+  print(res.text)
 
 def test_fft(headers):
   N = 100
@@ -47,13 +47,13 @@ def test_fft(headers):
       'input': y.tolist(),
       'length': 4
   }
-  res = requests.post('http://localhost:5000/fft', json=dict_to_send, headers=headers)
-  print res.text
+  res = requests.post('http://localhost:6000/fft', json=dict_to_send, headers=headers)
+  print(res.text)
 
 if __name__ == '__main__':
   try:
     # get token
-    token = requests.post('http://localhost:5000/auth', json={"username":"test","password":"test"})
+    token = requests.post('http://localhost:6000/auth', json={"username":"test","password":"test"})
     token = token.json()["access_token"]
     token = "JWT " + token
     headers = {"Authorization": token}
